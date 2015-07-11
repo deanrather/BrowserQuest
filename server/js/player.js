@@ -1,20 +1,29 @@
 
-var cls = require("./lib/class"),
-    _ = require("underscore"),
-    Character = require('./character'),
-    Chest = require('./chest'),
-    Messages = require("./message"),
-    Utils = require("./utils"),
-    Properties = require("./properties"),
-    Formulas = require("./formulas"),
-    check = require("./format").check,
-    Types = require("../../shared/js/gametypes")
-    bcrypt = require('bcrypt');
+var cls         = require("./lib/class"),
+    _           = require("underscore"),
+    Character   = require('./character'),
+    Chest       = require('./chest'),
+    Messages    = require("./message"),
+    Utils       = require("./utils"),
+    Properties  = require("./properties"),
+    Formulas    = require("./formulas"),
+    check       = require("./format").check,
+    Types       = require("../../shared/js/gametypes")
+    bcrypt      = require('bcrypt');
 
 module.exports = Player = Character.extend({
     init: function(connection, worldServer, databaseHandler) {
         var self = this;
 
+
+
+
+
+        /*****************************
+              Player's Attributes
+         *****************************/
+        
+        
         this.server = worldServer;
         this.connection = connection;
 
@@ -40,6 +49,16 @@ module.exports = Player = Character.extend({
 
         this.chatBanEndTime = 0;
 
+
+        
+        
+        
+
+        /*****************************
+              Message Listener
+         *****************************/
+        
+
         this.connection.listen(function(message) {
             var action = parseInt(message[0]);
 
@@ -48,17 +67,37 @@ module.exports = Player = Character.extend({
                 self.connection.close("Invalid "+Types.getMessageTypeAsString(action)+" message format: "+message);
                 return;
             }
+            
+            
+            
+            // Validation //
 
+
+            // If they've not yet entered the game, and the message was not either CREATE or LOGIN
             if(!self.hasEnteredGame && action !== Types.Messages.CREATE && action !== Types.Messages.LOGIN) { // CREATE or LOGIN must be the first message
+                
+                // Close the connection
                 self.connection.close("Invalid handshake message: "+message);
                 return;
             }
+            
+            // If they have entered the game, they're not dead, and the action is one of CREATE or LOGIN
             if(self.hasEnteredGame && !self.isDead && (action === Types.Messages.CREATE || action === Types.Messages.LOGIN)) { // CREATE/LOGIN can be sent only once
+                
+                // Close the connection
                 self.connection.close("Cannot initiate handshake twice: "+message);
                 return;
             }
 
+            
             self.resetTimeout();
+
+            
+            
+            
+            
+            // CREATE or LOGIN //
+
 
             if(action === Types.Messages.CREATE || action === Types.Messages.LOGIN) {
                 var name = Utils.sanitize(message[1]);
@@ -116,15 +155,36 @@ module.exports = Player = Character.extend({
                 // self.hasEnteredGame = true;
                 // self.isDead = false;
             }
+            
+            
+            
+            
+            // WHO //
+            
+            
             else if(action === Types.Messages.WHO) {
                 log.info("WHO: " + self.name);
                 message.shift();
                 self.server.pushSpawnsToPlayer(self, message);
             }
+            
+            
+            
+            
+            // ZONE //
+            
+            
             else if(action === Types.Messages.ZONE) {
                 log.info("ZONE: " + self.name);
                 self.zone_callback();
             }
+            
+            
+            
+            
+            // CHAT //
+            
+            
             else if(action === Types.Messages.CHAT) {
                 var msg = Utils.sanitize(message[1]);
                 log.info("CHAT: " + self.name + ": " + msg);
@@ -136,6 +196,13 @@ module.exports = Player = Character.extend({
                     self.broadcastToZone(new Messages.Chat(self, msg), false);
                 }
             }
+            
+            
+            
+            
+            // MOVE //
+            
+            
             else if(action === Types.Messages.MOVE) {
                 log.info("MOVE: " + self.name + "(" + message[1] + ", " + message[2] + ")");
                 if(self.move_callback) {
@@ -151,6 +218,13 @@ module.exports = Player = Character.extend({
                     }
                 }
             }
+            
+            
+            
+            
+            // LOOTMOVE //
+            
+            
             else if(action === Types.Messages.LOOTMOVE) {
                 log.info("LOOTMOVE: " + self.name + "(" + message[1] + ", " + message[2] + ")");
                 if(self.lootmove_callback) {
@@ -165,12 +239,26 @@ module.exports = Player = Character.extend({
                     }
                 }
             }
+            
+            
+            
+            
+            // AGGRO //
+            
+            
             else if(action === Types.Messages.AGGRO) {
                 log.info("AGGRO: " + self.name + " " + message[1]);
                 if(self.move_callback) {
                     self.server.handleMobHate(message[1], self.id, 5);
                 }
             }
+            
+            
+            
+            
+            // ATTACK //
+            
+            
             else if(action === Types.Messages.ATTACK) {
                 log.info("ATTACK: " + self.name + " " + message[1]);
                 var mob = self.server.getEntityById(message[1]);
@@ -180,6 +268,13 @@ module.exports = Player = Character.extend({
                     self.server.broadcastAttacker(self);
                 }
             }
+            
+            
+            
+            
+            // HIT //
+            
+            
             else if(action === Types.Messages.HIT) {
                 log.info("HIT: " + self.name + " " + message[1]);
                 var mob = self.server.getEntityById(message[1]);
@@ -203,6 +298,13 @@ module.exports = Player = Character.extend({
                     }
                 }
             }
+            
+            
+            
+            
+            // HURT //
+            
+            
             else if(action === Types.Messages.HURT) {
                 log.info("HURT: " + self.name + " " + message[1]);
                 var mob = self.server.getEntityById(message[1]);
@@ -218,6 +320,13 @@ module.exports = Player = Character.extend({
                     }
                 }
             }
+            
+            
+            
+            
+            // LOOT //
+            
+            
             else if(action === Types.Messages.LOOT) {
                 log.info("LOOT: " + self.name + " " + message[1]);
                 var item = self.server.getEntityById(message[1]);
@@ -260,6 +369,13 @@ module.exports = Player = Character.extend({
                     }
                 }
             }
+            
+            
+            
+            
+            // TELEPORT //
+            
+            
             else if(action === Types.Messages.TELEPORT) {
                 log.info("TELEPORT: " + self.name + "(" + message[1] + ", " + message[2] + ")");
                 var x = message[1],
@@ -275,6 +391,13 @@ module.exports = Player = Character.extend({
                     self.server.pushRelevantEntityListTo(self);
                 }
             }
+            
+            
+            
+            
+            // OPEN //
+            
+            
             else if(action === Types.Messages.OPEN) {
                 log.info("OPEN: " + self.name + " " + message[1]);
                 var chest = self.server.getEntityById(message[1]);
@@ -282,6 +405,13 @@ module.exports = Player = Character.extend({
                     self.server.handleOpenedChest(chest, self);
                 }
             }
+            
+            
+            
+            
+            // CHECK //
+            
+            
             else if(action === Types.Messages.CHECK) {
                 log.info("CHECK: " + self.name + " " + message[1]);
                 var checkpoint = self.server.map.getCheckpoint(message[1]);
@@ -290,6 +420,13 @@ module.exports = Player = Character.extend({
                     databaseHandler.setCheckpoint(self.name, self.x, self.y);
                 }
             }
+            
+            
+            
+            
+            // INVENTORY //
+            
+            
             else if(action === Types.Messages.INVENTORY){
                 log.info("INVENTORY: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
                 var inventoryNumber = message[2],
@@ -363,6 +500,13 @@ module.exports = Player = Character.extend({
                     }
                 }
             }
+            
+            
+            
+            
+            // ACHIEVEMENT //
+            
+            
             else if(action === Types.Messages.ACHIEVEMENT) {
                 log.info("ACHIEVEMENT: " + self.name + " " + message[1] + " " + message[2]);
                 if(message[2] === "found") {
@@ -370,6 +514,13 @@ module.exports = Player = Character.extend({
                     databaseHandler.foundAchievement(self.name, message[1]);
                 }
             }
+            
+            
+            
+            
+            // GUILD //
+            
+            
             else if(action === Types.Messages.GUILD) {
                 if(message[1] === Types.Messages.GUILDACTION.CREATE) {
                     var guildname = Utils.sanitize(message[2]);
@@ -405,6 +556,14 @@ module.exports = Player = Character.extend({
                 else if(message[1] === Types.Messages.GUILDACTION.TALK) {
                     self.server.pushToGuild(self.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.TALK, [self.name, self.id, message[2]]));
                 }
+            
+            
+            
+            
+            
+            // OTHER? //
+            
+            
             } else {
                 if(self.message_callback) {
                     self.message_callback(message);
@@ -425,6 +584,20 @@ module.exports = Player = Character.extend({
         this.connection.sendUTF8("go"); // Notify client that the HELLO/WELCOME handshake can start
     },
 
+
+
+
+
+
+        
+        
+        
+
+    /*****************************
+          Other Functions
+     *****************************/
+    
+    
     destroy: function() {
         var self = this;
 

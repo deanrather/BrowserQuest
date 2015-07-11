@@ -209,8 +209,10 @@ WS.WebsocketServer = Server.extend({
                 log.info('Server (only) is listening on port ' + port);
             });
         }
-
-        this._ioServer = new socketio(this._httpServer);
+        
+        // this._ioServer = new socketio(this._httpServer);
+        this._ioServer = helper.IO.connection.sockets; // Odus Integration
+        
         this._ioServer.on('connection', function webSocketListener(socket) {
             log.info('Client socket connected from ' + socket.conn.remoteAddress);
             // Add remoteAddress property

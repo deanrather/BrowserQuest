@@ -60,7 +60,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             // this.connection = io(url, {forceNew: true, reconnection: false});// This sets the connection as a socket.io Socket.
             // this.connection = io.connect(url); // This sets the connection as a socket.io Socket.
             this.connection = helper.IO.connection;
-            this.connection.emit("BROWSERQUEST_CONNECTION"); //hax... 
+            this.connection.emit(SIGNALS.BROWSERQUEST.CONNECT); 
 
             if(dispatcherMode) {
                 this.connection.on('message', function(e) {

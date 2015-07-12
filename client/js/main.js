@@ -5,6 +5,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
     var initApp = function() {
         $(document).ready(function() {
             app = new App();
+            window.BrowserQuest = app;
             app.center();
 
             if(Detect.isWindows()) {

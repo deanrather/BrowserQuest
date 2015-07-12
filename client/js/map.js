@@ -31,7 +31,7 @@ define(['jquery', 'area'], function($, Area) {
 
             if(useWorker) {
                 log.info("Loading map with web worker.");
-                var worker = new Worker('js/mapworker.js');
+                var worker = new Worker('/browserquest/js/mapworker.js');
                 worker.postMessage(1);
 
                 worker.onmessage = function(event) {
@@ -127,7 +127,7 @@ define(['jquery', 'area'], function($, Area) {
                 tileset = new Image();
 
             tileset.crossOrigin = "Anonymous";
-            tileset.src = filepath;
+            tileset.src = '/browserquest/' + filepath;
 
             log.info("Loading tileset: "+filepath);
 

@@ -213,7 +213,8 @@ WS.WebsocketServer = Server.extend({
         // this._ioServer = new socketio(this._httpServer);
         this._ioServer = helper.IO.connection.sockets; // Odus Integration
         
-        this._ioServer.on('connection', function webSocketListener(socket) {
+        // this._ioServer.on('connection', function webSocketListener(socket) {
+        helper.IO.BQ_onConnect = function webSocketListener(socket) {
             log.info('Client socket connected from ' + socket.conn.remoteAddress);
             // Add remoteAddress property
             socket.remoteAddress = socket.conn.remoteAddress;
@@ -225,7 +226,7 @@ WS.WebsocketServer = Server.extend({
             }
 
             self.addConnection(c);
-        });
+        };
     },
 
     _createId: function() {

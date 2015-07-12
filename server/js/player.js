@@ -60,7 +60,8 @@ module.exports = Player = Character.extend({
         
 
         this.connection.listen(function(message) {
-            var action = parseInt(message[0]);
+            // var action = parseInt(message[0]);
+            var action = message[0];
 
             log.debug("Received: "+message);
             if(!check(message)) {
@@ -77,6 +78,9 @@ module.exports = Player = Character.extend({
             if(!self.hasEnteredGame && action !== Types.Messages.CREATE && action !== Types.Messages.LOGIN) { // CREATE or LOGIN must be the first message
                 
                 // Close the connection
+                console.log("action", action);
+                console.log("expected create", Types.Messages.CREATE);
+                console.log("expected login", Types.Messages.LOGIN);
                 self.connection.close("Invalid handshake message: "+message);
                 return;
             }

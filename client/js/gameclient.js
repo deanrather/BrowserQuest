@@ -58,7 +58,9 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             log.info("Trying to connect to server : "+url);
 
             // this.connection = io(url, {forceNew: true, reconnection: false});// This sets the connection as a socket.io Socket.
-            this.connection = io.connect(url); // This sets the connection as a socket.io Socket.
+            // this.connection = io.connect(url); // This sets the connection as a socket.io Socket.
+            this.connection = helper.IO.connection;
+            this.connection.emit("BROWSERQUEST_CONNECTION"); //hax... 
 
             if(dispatcherMode) {
                 this.connection.on('message', function(e) {

@@ -94,11 +94,11 @@ define(['area'], function(Area) {
         },
 
         loadSound: function(name, handleLoaded) {
-            this.load("audio/sounds/", name, handleLoaded, 4);
+            this.load("/browserquest/audio/sounds/", name, handleLoaded, 4);
         },
 
         loadMusic: function(name, handleLoaded) {
-            this.load("audio/music/", name, handleLoaded, 1);
+            this.load("/browserquest/audio/music/", name, handleLoaded, 1);
             var music = this.sounds[name][0];
             music.loop = true;
             music.addEventListener('ended', function() { music.play() }, false);

@@ -5,6 +5,9 @@ var _ = require('underscore');
 
 
 function main(config) {
+    
+    BrowserQuestConfig = config;
+    
     var Log = require('log');
     switch(config.debug_level) {
         case "error":
@@ -49,6 +52,7 @@ function main(config) {
         var world; // the one in which the player will be spawned
         var connect = function() {
                 if(world) {
+                    console.log("BQ player connected. Odus player:", connection._connection.odus.player.get('name'));
                     world.connect_callback(new Player(connection, world, databaseHandler));
                 }
             };
@@ -132,6 +136,7 @@ function getConfigFile(path, callback) {
 
 var defaultConfigPath = __dirname + '/../config.json';
 var customConfigPath = __dirname + '/../config_local.json';
+var BrowserQuestConfig = null;
 
 process.argv.forEach(function (val, index, array) {
     if(index === 2) {

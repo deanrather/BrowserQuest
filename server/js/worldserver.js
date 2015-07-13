@@ -82,29 +82,50 @@ module.exports = World = cls.Class.extend({
 
             var move_callback = function(x, y) {
                 log.debug(player.name + " is moving to (" + x + ", " + y + ").");
-                 var isPVP = self.map.isPVP(x, y);
-                player.flagPVP(isPVP); 
-               player.forEachAttacker(function(mob) {
-                     if(mob.target === null){
-                        player.removeAttacker(mob);
-                        return;
+                    
+                var mobArea = _.detect(self.mobAreas, function(mobArea){
+                    return mobArea.contains(x,y);
+                });                
+                if(mobArea){
+                    console.log(player.name + " has entered a mob area", mobArea.nb, mobArea.kind);
+                    // helper.ServerCommands.encounter([], this.player.user.client);
+                    // self.pushToPlayer(player, new Messages.Attack(player.id, 1));
+                    // console.log("odus player is ", player.connection.odus.player);
+                    var oname = player.connection._connection.odus.player.get("name");
+                    console.log("odus player ", oname, " is in a mob area!");
+                    if(mobArea.battleID)
+                    {
+                        player.connection._connection.odus.player.gameController.joinBattle(mobArea.battleID);
                     }
-                   var target = self.getEntityById(mob.target);
-                    if(target) {
-                        var pos = self.findPositionNextTo(mob, target);
-                        if(mob.distanceToSpawningPoint(pos.x, pos.y) > 50) {
-                            mob.clearTarget();
-                            mob.forgetEveryone();
-                            player.removeAttacker(mob);
-                        } else {
-                            self.moveEntity(mob, pos.x, pos.y);
-                        }
+                    else
+                    {
+                        player.connection._connection.odus.player.gameController.startNPCBattle(mobArea);
                     }
-                });
+                }
+                 
+               //   var isPVP = self.map.isPVP(x, y);
+               //  player.flagPVP(isPVP); 
+               // player.forEachAttacker(function(mob) {
+               //       if(mob.target === null){
+               //          player.removeAttacker(mob);
+               //          return;
+               //      }
+               //     var target = self.getEntityById(mob.target);
+               //      if(target) {
+               //          var pos = self.findPositionNextTo(mob, target);
+               //          if(mob.distanceToSpawningPoint(pos.x, pos.y) > 50) {
+               //              mob.clearTarget();
+               //              mob.forgetEveryone();
+               //              player.removeAttacker(mob);
+               //          } else {
+               //              self.moveEntity(mob, pos.x, pos.y);
+               //          }
+               //      }
+               //  });
             };
 
             player.onMove(move_callback);
-            player.onLootMove(move_callback);
+            // player.onLootMove(move_callback);
 
             player.onZone(function() {
                 var hasChangedGroups = self.handleEntityGroupMembership(player);
@@ -142,25 +163,25 @@ module.exports = World = cls.Class.extend({
         });
 
         // Called when an entity is attacked by another entity
-        this.onEntityAttack(function(attacker) {
-            var target = self.getEntityById(attacker.target);
-            if(target && attacker.type === "mob") {
-                var pos = self.findPositionNextTo(attacker, target);
-                self.moveEntity(attacker, pos.x, pos.y);
-            }
-        });
+        // this.onEntityAttack(function(attacker) {
+        //     var target = self.getEntityById(attacker.target);
+        //     if(target && attacker.type === "mob") {
+        //         var pos = self.findPositionNextTo(attacker, target);
+        //         self.moveEntity(attacker, pos.x, pos.y);
+        //     }
+        // });
 
-        this.onRegenTick(function() {
-            self.forEachCharacter(function(character) {
-                if(!character.hasFullHealth()) {
-                    character.regenHealthBy(Math.floor(character.maxHitPoints / 25));
+        // this.onRegenTick(function() {
+        //     self.forEachCharacter(function(character) {
+        //         if(!character.hasFullHealth()) {
+        //             character.regenHealthBy(Math.floor(character.maxHitPoints / 25));
 
-                    if(character.type === 'player') {
-                        self.pushToPlayer(character, character.regen());
-                    }
-                }
-            });
-        });
+        //             if(character.type === 'player') {
+        //                 self.pushToPlayer(character, character.regen());
+        //             }
+        //         }
+        //     });
+        // });
     },
 
     run: function(mapFilePath) {
@@ -174,34 +195,39 @@ module.exports = World = cls.Class.extend({
             self.map.generateCollisionGrid();
 
             // Populate all mob "roaming" areas
+            // _.each(self.map.mobAreas, function(a) {
+            //     var area = new MobArea(a.id, a.nb, a.type, a.x, a.y, a.width, a.height, self);
+            //     area.spawnMobs();
+            //     area.onEmpty(self.handleEmptyMobArea.bind(self, area));
+
+            //     self.mobAreas.push(area);
+            // });
+
             _.each(self.map.mobAreas, function(a) {
                 var area = new MobArea(a.id, a.nb, a.type, a.x, a.y, a.width, a.height, self);
-                area.spawnMobs();
-                area.onEmpty(self.handleEmptyMobArea.bind(self, area));
-
                 self.mobAreas.push(area);
             });
 
             // Create all chest areas
-            _.each(self.map.chestAreas, function(a) {
-                var area = new ChestArea(a.id, a.x, a.y, a.w, a.h, a.tx, a.ty, a.i, self);
-                self.chestAreas.push(area);
-                area.onEmpty(self.handleEmptyChestArea.bind(self, area));
-            });
+            // _.each(self.map.chestAreas, function(a) {
+            //     var area = new ChestArea(a.id, a.x, a.y, a.w, a.h, a.tx, a.ty, a.i, self);
+            //     self.chestAreas.push(area);
+            //     area.onEmpty(self.handleEmptyChestArea.bind(self, area));
+            // });
 
             // Spawn static chests
-            _.each(self.map.staticChests, function(chest) {
-                var c = self.createChest(chest.x, chest.y, chest.i);
-                self.addStaticItem(c);
-            });
+            // _.each(self.map.staticChests, function(chest) {
+            //     var c = self.createChest(chest.x, chest.y, chest.i);
+            //     self.addStaticItem(c);
+            // });
 
             // Spawn static entities
             self.spawnStaticEntities();
 
             // Set maximum number of entities contained in each chest area
-            _.each(self.chestAreas, function(area) {
-                area.setNumberOfEntities(area.entities.length);
-            });
+            // _.each(self.chestAreas, function(area) {
+            //     area.setNumberOfEntities(area.entities.length);
+            // });
         });
 
         var regenCount = this.ups * 2;
@@ -702,22 +728,22 @@ module.exports = World = cls.Class.extend({
             if(Types.isNpc(kind)) {
                 self.addNpc(kind, pos.x + 1, pos.y);
             }
-            if(Types.isMob(kind)) {
-                var mob = new Mob('7' + kind + count++, kind, pos.x + 1, pos.y);
-                mob.onRespawn(function() {
-                    mob.isDead = false;
-                    self.addMob(mob);
-                    if(mob.area && mob.area instanceof ChestArea) {
-                        mob.area.addToArea(mob);
-                    }
-                });
-                mob.onMove(self.onMobMoveCallback.bind(self));
-                self.addMob(mob);
-                self.tryAddingMobToChestArea(mob);
-            }
-            if(Types.isItem(kind)) {
-                self.addStaticItem(self.createItem(kind, pos.x + 1, pos.y));
-            }
+            // if(Types.isMob(kind)) {
+            //     var mob = new Mob('7' + kind + count++, kind, pos.x + 1, pos.y);
+            //     mob.onRespawn(function() {
+            //         mob.isDead = false;
+            //         self.addMob(mob);
+            //         if(mob.area && mob.area instanceof ChestArea) {
+            //             mob.area.addToArea(mob);
+            //         }
+            //     });
+            //     mob.onMove(self.onMobMoveCallback.bind(self));
+            //     self.addMob(mob);
+            //     self.tryAddingMobToChestArea(mob);
+            // }
+            // if(Types.isItem(kind)) {
+            //     self.addStaticItem(self.createItem(kind, pos.x + 1, pos.y));
+            // }
         });
     },
 

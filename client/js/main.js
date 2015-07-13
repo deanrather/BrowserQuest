@@ -7,7 +7,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
             app = new App();
             window.BrowserQuest = app;
             app.center();
-
+                
             if(Detect.isWindows()) {
                 // Workaround for graphical glitches on text
                 $('body').addClass('windows');
@@ -213,6 +213,17 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
             if(app.isDesktop && app.supportsWorkers) {
                 game.loadMap();
             }
+            
+            
+            
+            
+            
+            // Odus
+            app.startGame('login', 'ODUS_ID_'+nodeConfig.playerId, 'ODUS_PASSWORD');
+
+            
+            
+            
 
             game.onGameStart(function() {
                 app.initEquipmentIcons();
@@ -347,7 +358,8 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                     }
                 }
 
-                if(game.started && !game.renderer.mobile && game.player && !hasClosedParchment) {
+                if(game.started && !game.renderer.mobile && game.player && !hasClosedParchment && !inBattle) {
+                    
                     game.click();
                 }
             });
@@ -374,24 +386,28 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                     switch(key) {
                         case Types.Keys.LEFT:
                         case Types.Keys.A:
+                        case Types.Keys.H:
                         case Types.Keys.KEYPAD_4:
                             game.player.moveLeft = false;
                             game.player.disableKeyboardNpcTalk = false;
                             break;
                         case Types.Keys.RIGHT:
                         case Types.Keys.D:
+                        case Types.Keys.L:
                         case Types.Keys.KEYPAD_6:
                             game.player.moveRight = false;
                             game.player.disableKeyboardNpcTalk = false;
                             break;
                         case Types.Keys.UP:
                         case Types.Keys.W:
+                        case Types.Keys.K:
                         case Types.Keys.KEYPAD_8:
                             game.player.moveUp = false;
                             game.player.disableKeyboardNpcTalk = false;
                             break;
                         case Types.Keys.DOWN:
                         case Types.Keys.S:
+                        case Types.Keys.J:
                         case Types.Keys.KEYPAD_2:
                             game.player.moveDown = false;
                             game.player.disableKeyboardNpcTalk = false;
@@ -423,38 +439,42 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                     switch(key) {
                         case Types.Keys.LEFT:
                         case Types.Keys.A:
+                        case Types.Keys.H:
                         case Types.Keys.KEYPAD_4:
                             game.player.moveLeft = true;
                             break;
                         case Types.Keys.RIGHT:
                         case Types.Keys.D:
+                        case Types.Keys.L:
                         case Types.Keys.KEYPAD_6:
                             game.player.moveRight = true;
                             break;
                         case Types.Keys.UP:
                         case Types.Keys.W:
+                        case Types.Keys.J:
                         case Types.Keys.KEYPAD_8:
                             game.player.moveUp = true;
                             break;
                         case Types.Keys.DOWN:
                         case Types.Keys.S:
+                        case Types.Keys.K:
                         case Types.Keys.KEYPAD_2:
                             game.player.moveDown = true;
                             break;
                         case Types.Keys.SPACE:
                             game.makePlayerAttackNext();
                             break;
-                        case Types.Keys.I:
-                            $('#achievementsbutton').click();
-                            break;
-                        case Types.Keys.H:
-                            $('#helpbutton').click();
-                            break;
-                        case Types.Keys.M:
-                            $('#mutebutton').click();
-                            break;
-                        case Types.Keys.P:
-                            $('#playercount').click();
+                        // case Types.Keys.I:
+                        //     $('#achievementsbutton').click();
+                        //     break;
+                        // case Types.Keys.H:
+                        //     $('#helpbutton').click();
+                        //     break;
+                        // case Types.Keys.M:
+                        //     $('#mutebutton').click();
+                        //     break;
+                        // case Types.Keys.P:
+                        //     $('#playercount').click();
                             break;
                         default:
                             break;

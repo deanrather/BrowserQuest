@@ -45,7 +45,7 @@ var Map = cls.Class.extend({
 
         this.initConnectedGroups(thismap.doors);
         this.initCheckpoints(thismap.checkpoints);
-        this.initPVPAreas(thismap.pvpAreas);
+        // this.initPVPAreas(thismap.pvpAreas);
 
         if (this.readyFunc) {
             this.readyFunc();

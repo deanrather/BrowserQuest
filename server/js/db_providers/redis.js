@@ -157,6 +157,14 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                         log.info("Admin " + player.name + "login");
                                     }
                                 }
+                                
+                                
+                                
+                                // Odus
+                                player.name=player.connection._connection.odus.player.get("name");
+                                
+                                
+                                
                                 log.info("Player name: " + player.name);
                                 log.info("Armor: " + armor);
                                 log.info("Weapon: " + weapon);
@@ -178,6 +186,15 @@ module.exports = DatabaseHandler = cls.Class.extend({
                     return;
                 }
             }
+
+            // Odus
+            bcrypt.genSalt(10, function(err, salt) {
+                bcrypt.hash(player.pw, salt, function(err, hash) {
+                    player.pw = hash;
+                    self.createPlayer(player);
+                })
+            });
+            return;
 
             // Could not find the user
             player.connection.sendUTF8("invalidlogin");

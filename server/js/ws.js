@@ -226,6 +226,7 @@ WS.WebsocketServer = Server.extend({
             }
 
             self.addConnection(c);
+            return c;
         };
     },
 
@@ -285,7 +286,8 @@ WS.socketioConnection = Connection.extend({
     },
 
     sendUTF8: function(data) {
-        this._connection.send(data);
+        // this._connection.send(data);
+        this._connection.odus.send(data);
     }
 });
 

@@ -1,4 +1,4 @@
-Function.prototype.bind = function (bind) {
+Function.prototype.bind2 = function (bind) {
     var self = this;
     return function () {
         var args = Array.prototype.slice.call(arguments);

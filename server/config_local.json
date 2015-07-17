@@ -1,0 +1,18 @@
+{
+    "port": 8082,
+    "debug_level": "info",
+    "nb_players_per_world": 2000,
+    "nb_worlds": 1,
+    "map_filepath": "/usr/src/odus/server/node/lib/BrowserQuest/server/maps/world_server.json",
+    "metrics_enabled": false,
+    "use_one_port": false,
+    "redis_port": 6379,
+    "redis_host": "127.0.0.1",
+    "memcached_host": "127.0.0.1",
+    "memcached_port": 11211,
+    "game_servers": [{"server": "localhost", "name": "localhost"}],
+    "server_name" : "localhost",
+    "production": "heroku",
+    "database": "redis",
+    "mob_area_no_roaming": true
+}

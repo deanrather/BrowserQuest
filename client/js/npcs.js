@@ -1,5 +1,5 @@
 
-define(['npc'], function(Npc) {
+define(['/browserquest/js/npc.js'], function(Npc) {
 
     var NPCs = {
 

@@ -1,5 +1,5 @@
 
-define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
+define(['jquery', '/browserquest/js/animation.js', '/browserquest/js/sprites.js'], function($, Animation, sprites) {
 
     var Sprite = Class.extend({
         init: function(name, scale) {

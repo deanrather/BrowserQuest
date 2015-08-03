@@ -1,5 +1,5 @@
 
-define(['character', 'exceptions'], function(Character, Exceptions) {
+define(['/browserquest/js/character.js', '/browserquest/js/exceptions.js'], function(Character, Exceptions) {
 
     var Player = Character.extend({
         MAX_LEVEL: 10,

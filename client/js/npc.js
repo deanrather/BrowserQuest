@@ -1,4 +1,4 @@
-define(['character'], function(Character) {
+define(['/browserquest/js/character.js'], function(Character) {
 
     var NpcTalk = {
         "guard": [

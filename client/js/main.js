@@ -1,5 +1,5 @@
 
-define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
+define(['jquery', '/browserquest/js/app.js', '/browserquest/js/entrypoint.js'], function($, App, EntryPoint) {
     var app, game;
 
     var initApp = function() {
@@ -198,7 +198,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
     };
 
     var initGame = function() {
-        require(['game'], function(Game) {
+        requirejs(['/browserquest/js/game.js'], function(Game) {
 
             var canvas = document.getElementById("entities"),
                 background = document.getElementById("background"),

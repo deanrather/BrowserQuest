@@ -1,5 +1,5 @@
 
-define(['text!../config/config_build.json'],
+define(['text!/browserquest/config/config_build.json'],
 function(build) {
     var config = {
         dev: { host: "localhost", port: 8000, dispatcher: false },
@@ -7,7 +7,7 @@ function(build) {
     };
 
     //>>excludeStart("prodHost", pragmas.prodHost);
-    require(['text!../config/config_local.json'], function(local) {
+    requirejs(['text!/browserquest/config/config_local.json'], function(local) {
         try {
             config.local = JSON.parse(local);
         } catch(e) {

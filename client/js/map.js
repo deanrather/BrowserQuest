@@ -1,5 +1,5 @@
 
-define(['jquery', 'area'], function($, Area) {
+define(['jquery', '/browserquest/js/area.js'], function($, Area) {
 
     var Map = Class.extend({
         init: function(loadMultiTilesheets, game) {
@@ -27,7 +27,7 @@ define(['jquery', 'area'], function($, Area) {
 
         _loadMap: function(useWorker) {
             var self = this,
-                filepath = "maps/world_client.json";
+                filepath = "/browserquest/maps/world_client.json";
 
             if(useWorker) {
                 log.info("Loading map with web worker.");

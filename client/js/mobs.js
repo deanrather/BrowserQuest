@@ -1,5 +1,5 @@
 
-define(['mob', 'timer'], function(Mob, Timer) {
+define(['/browserquest/js/mob.js', '/browserquest/js/timer.js'], function(Mob, Timer) {
 
     var Mobs = {
         Rat: Mob.extend({

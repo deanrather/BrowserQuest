@@ -1,5 +1,5 @@
 
-define(['character'], function(Character) {
+define(['/browserquest/js/character.js'], function(Character) {
 
     var Mob = Character.extend({
         init: function(id, kind) {

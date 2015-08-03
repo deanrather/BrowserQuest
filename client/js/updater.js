@@ -1,5 +1,5 @@
 
-define(['character', 'timer'], function(Character, Timer) {
+define(['/browserquest/js/character.js', '/browserquest/js/timer.js'], function(Character, Timer) {
 
     var Updater = Class.extend({
         init: function(game) {

@@ -1,5 +1,5 @@
 
-define(['jquery', 'timer'], function($, Timer) {
+define(['jquery', '/browserquest/js/timer.js'], function($, Timer) {
 
     var Bubble = Class.extend({
         init: function(id, element, time) {

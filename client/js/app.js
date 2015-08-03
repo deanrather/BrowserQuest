@@ -1,5 +1,5 @@
 
-define(['jquery', 'storage'], function($, Storage) {
+define(['jquery', '/browserquest/js/storage.js'], function($, Storage) {
 
     var App = Class.extend({
         init: function() {

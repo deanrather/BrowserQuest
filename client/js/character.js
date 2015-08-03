@@ -1,5 +1,5 @@
 
-define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
+define(['/browserquest/js/entity.js', '/browserquest/js/transition.js', '/browserquest/js/timer.js'], function(Entity, Transition, Timer) {
 
     var Character = Entity.extend({
         init: function(id, kind) {

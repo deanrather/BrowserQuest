@@ -1057,7 +1057,7 @@ var requirejs, require, define;
             if (context.scriptCount <= 0) {
                 //Synchronous envs will push the number below zero with the
                 //decrement above, be sure to set it back to zero for good measure.
-                //require() calls that also do not end up loading scripts could
+                //requirejs() calls that also do not end up loading scripts could
                 //push the number negative too.
                 context.scriptCount = 0;
             }
@@ -1193,7 +1193,7 @@ var requirejs, require, define;
                     context.takeGlobalQueue();
                     resume();
 
-                    context.require(cfg.priority);
+                    context.requirejs(cfg.priority);
 
                     //Trigger a resume right away, for the case when
                     //the script with the priority load is done as part
@@ -1211,7 +1211,7 @@ var requirejs, require, define;
                 //require with those args. This is useful when require is defined as a
                 //config object before require.js is loaded.
                 if (cfg.deps || cfg.callback) {
-                    context.require(cfg.deps || [], cfg.callback);
+                    context.requirejs(cfg.deps || [], cfg.callback);
                 }
 
                 //Set up ready callback, if asked. Useful when require is defined as a
@@ -1480,7 +1480,7 @@ var requirejs, require, define;
             context.configure(config);
         }
 
-        return context.require(deps, callback);
+        return context.requirejs(deps, callback);
     };
 
     /**
@@ -1590,7 +1590,7 @@ var requirejs, require, define;
 
     /**
      * The function that handles definitions of modules. Differs from
-     * require() in that a string for the module should be the first argument,
+     * requirejs() in that a string for the module should be the first argument,
      * and the function to execute after dependencies are loaded should
      * return a value to define the module corresponding to the first argument's
      * name.
@@ -1989,8 +1989,8 @@ var requirejs, require, define;
     //which seems odd to do on the server.
     if (req.isAsync && typeof setTimeout !== "undefined") {
         ctx = s.contexts[(cfg.context || defContextName)];
-        //Indicate that the script that includes require() is still loading,
-        //so that require()'d dependencies are not traced until the end of the
+        //Indicate that the script that includes requirejs() is still loading,
+        //so that requirejs()'d dependencies are not traced until the end of the
         //file is parsed (approximated via the setTimeout call).
         ctx.requireWait = true;
         setTimeout(function () {

@@ -1,5 +1,5 @@
 
-define(['mobs', 'items', 'npcs', 'warrior', 'chest'], function(Mobs, Items, NPCs, Warrior, Chest) {
+define(['/browserquest/js/mobs.js', '/browserquest/js/items.js', '/browserquest/js/npcs.js', '/browserquest/js/warrior.js', '/browserquest/js/chest.js'], function(Mobs, Items, NPCs, Warrior, Chest) {
 
     var EntityFactory = {};
 

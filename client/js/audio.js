@@ -1,5 +1,5 @@
 
-define(['area'], function(Area) {
+define(['/browserquest/js/area.js'], function(Area) {
 
     var AudioManager = Class.extend({
         init: function(game) {

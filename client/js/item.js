@@ -1,5 +1,5 @@
 
-define(['entity'], function(Entity) {
+define(['/browserquest/js/entity.js'], function(Entity) {
 
     var Item = Entity.extend({
         init: function(id, kind, type) {

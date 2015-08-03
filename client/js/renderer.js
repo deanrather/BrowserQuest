@@ -1,5 +1,5 @@
 
-define(['camera', 'item', 'character', 'player', 'timer'],
+define(['/browserquest/js/camera.js', '/browserquest/js/item.js', '/browserquest/js/character.js', '/browserquest/js/player.js', '/browserquest/js/timer.js'],
 function(Camera, Item, Character, Player, Timer) {
 
     var Renderer = Class.extend({

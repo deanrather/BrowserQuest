@@ -1,5 +1,5 @@
 
-define(['item'], function(Item) {
+define(['/browserquest/js/item.js'], function(Item) {
 
     var Items = {
 

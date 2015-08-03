@@ -1,4 +1,4 @@
-define(['lib/sha1', 'util'],function() {
+define(['/browserquest/js/lib/sha1.js', '/browserquest/js/util.js'],function() {
 
     var EntryPoint = Class.extend({
 		init: function(){

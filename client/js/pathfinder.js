@@ -1,4 +1,4 @@
-define(['lib/astar'], function(AStar) {
+define(['/browserquest/js/lib/astar.js'], function(AStar) {
 
     var Pathfinder = Class.extend({
         init: function(width, height) {

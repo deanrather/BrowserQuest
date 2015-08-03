@@ -1,8 +1,8 @@
 
-define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
-        'tile', 'warrior', 'gameclient', 'audio', 'updater', 'transition',
-        'pathfinder', 'item', 'mob', 'npc', 'player', 'character', 'chest',
-        'mobs', 'exceptions', 'config', 'guild', '../../browserquest/shared/js/gametypes'],
+define(['/browserquest/js/infomanager.js', '/browserquest/js/bubble.js', '/browserquest/js/renderer.js', '/browserquest/js/map.js', '/browserquest/js/animation.js', '/browserquest/js/sprite.js',
+        '/browserquest/js/tile.js', '/browserquest/js/warrior.js', '/browserquest/js/gameclient.js', '/browserquest/js/audio.js', '/browserquest/js/updater.js', '/browserquest/js/transition.js',
+        '/browserquest/js/pathfinder.js', '/browserquest/js/item.js', '/browserquest/js/mob.js', '/browserquest/js/npc.js', '/browserquest/js/player.js', '/browserquest/js/character.js', '/browserquest/js/chest.js',
+        '/browserquest/js/mobs.js', '/browserquest/js/exceptions.js', '/browserquest/js/config.js', '/browserquest/js/guild.js', '/browserquest/shared/js/gametypes.js'],
 function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
          Warrior, GameClient, AudioManager, Updater, Transition, Pathfinder,
          Item, Mob, Npc, Player, Character, Chest, Mobs, Exceptions, config,

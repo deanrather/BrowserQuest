@@ -1,5 +1,5 @@
 
-define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory, BISON) {
+define(['/browserquest/js/player.js', '/browserquest/js/entityfactory.js', 'bower_components/bison/lib/bison.js'], function(Player, EntityFactory, BISON) {
 
     var GameClient = Class.extend({
         init: function(host, port) {

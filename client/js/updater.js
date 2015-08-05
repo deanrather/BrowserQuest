@@ -10,12 +10,12 @@ define(['/browserquest/js/character.js', '/browserquest/js/timer.js'], function(
         update: function() {
             this.updateZoning();
             this.updateCharacters();
-            this.updatePlayerAggro();
+//            this.updatePlayerAggro();
             this.updateTransitions();
             this.updateAnimations();
             this.updateAnimatedTiles();
             this.updateChatBubbles();
-            this.updateInfos();
+//            this.updateInfos();
             this.updateKeyboardMovement();
         },
 

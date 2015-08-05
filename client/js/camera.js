@@ -13,14 +13,40 @@ define(function() {
         },
 
         rescale: function() {
-            var factor = this.renderer.mobile ? 1 : 2;
+            var factor = this.renderer.getScaleFactor();
+			
+			var stageWidth = $('#stage').width();
+			var stageHeight = $('#stage').height();
+			
+			// TODO: Figure out why this always is zero...
+			if(!stageWidth || !stageHeight)
+			{
+				stageWidth = 640;
+				stageHeight = 480;
+			}
+			
+			console.log("The stage is", stageWidth, 'pixels wide, and the squares are each', (16 * factor), "px wide");
+			console.log("The stage is", stageHeight, 'pixels high, and the squares are each', (16 * factor), "px high");
+			
+            var gridW = stageWidth / 16 / factor;
+            var gridH = stageHeight / 16 / factor;
 
-            this.gridW = 15 * factor * 2;
-            this.gridH = 7 * factor * 2;
-
-            log.debug("---------");
-            log.debug("Factor:"+factor);
-            log.debug("W:"+this.gridW + " H:" + this.gridH);
+			console.log("Therefore, we can fit", gridW, "x", gridH, "squares on the stage");
+			
+			this.gridW = Math.ceil(gridW);
+			this.gridH = Math.ceil(gridH);
+			
+			console.log("But since we can't handle partial squares, we'll draw", this.gridW, "x", this.gridH, "squares on the stage");
+			
+			var xOffset = Math.floor((this.gridW - gridW) / 2 * 16 * factor);
+			var yOffset = Math.floor((this.gridH - gridH) / 2 * 16 * factor);
+			
+			console.log("And we'll offset the whole thing by ", xOffset, ",", yOffset, "px to re-center it.");
+			
+			$("#game").css('position', 'absolute');
+			$("#game").css('left', -xOffset);
+			$("#game").css('top', -yOffset);
+			
         },
 
         setPosition: function(x, y) {

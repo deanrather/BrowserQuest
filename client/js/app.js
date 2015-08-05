@@ -8,8 +8,8 @@ define(['jquery', '/browserquest/js/storage.js'], function($, Storage) {
             this.isParchmentReady = true;
             this.ready = false;
             this.storage = new Storage();
-            this.watchNameInputInterval = setInterval(this.toggleButton.bind(this), 100);
-            this.initFormFields();
+//             this.watchNameInputInterval = setInterval(this.toggleButton.bind(this), 100);
+//             this.initFormFields();
 
             if(localStorage && localStorage.data) {
                 this.frontPage = 'loadcharacter';
@@ -695,10 +695,10 @@ define(['jquery', '/browserquest/js/storage.js'], function($, Storage) {
             if(this.game) {
                 if(this.game.started) {
                     this.game.resize();
-                    this.initHealthBar();
-                    this.initTargetHud();
-                    this.initExpBar();
-                    this.game.updateBars();
+//                     this.initHealthBar();
+//                     this.initTargetHud();
+//                     this.initExpBar();
+//                     this.game.updateBars();
                 } else {
                     var newScale = this.game.renderer.getScaleFactor();
                     this.game.renderer.rescale(newScale);

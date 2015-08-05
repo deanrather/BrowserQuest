@@ -107,7 +107,7 @@ function(Camera, Item, Character, Player, Timer) {
         },
 
         initFPS: function() {
-            this.FPS = this.mobile ? 50 : 50;
+            this.FPS = this.mobile ? 30 : 60;
         },
 
         initFont: function() {
@@ -731,12 +731,12 @@ function(Camera, Item, Character, Player, Timer) {
         },
 
         renderFrame: function() {
-            if(this.mobile || this.tablet) {
-                this.renderFrameMobile();
-            }
-            else {
+//            if(this.mobile || this.tablet) {
+//                this.renderFrameMobile();
+//            }
+//            else {
                 this.renderFrameDesktop();
-            }
+//            }
         },
 
         renderFrameDesktop: function() {
@@ -754,7 +754,7 @@ function(Camera, Item, Character, Player, Timer) {
                 //this.drawOccupiedCells();
                 this.drawPathingCells();
                 this.drawEntities();
-                this.drawCombatInfo();
+//                this.drawCombatInfo();
                 this.drawHighTiles(this.context);
             this.context.restore();
 

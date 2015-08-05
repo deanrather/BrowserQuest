@@ -55,7 +55,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.hoveringCollidingTile = false;
 
             // combat
-            this.infoManager = new InfoManager(this);
+//             this.infoManager = new InfoManager(this);
 
             // zoning
             this.currentZoning = null;
@@ -74,18 +74,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.pvpFlag = false;
 
             // sprites
-            this.spriteNames = ["hand", "sword", "loot", "target", "talk", "sparks", "shadow16", "rat", "skeleton", "skeleton2", "spectre", "boss", "deathknight",
-                                "ogre", "crab", "snake", "eye", "bat", "goblin", "wizard", "guard", "king", "villagegirl", "villager", "coder", "agent", "rick", "scientist", "nyan", "priest",
-                                "sorcerer", "octocat", "beachnpc", "forestnpc", "desertnpc", "lavanpc", "clotharmor", "leatherarmor", "mailarmor",
-                                "platearmor", "redarmor", "goldenarmor", "firefox", "death", "sword1", "axe", "chest",
-                                "sword2", "redsword", "bluesword", "goldensword", "item-sword2", "item-axe", "item-redsword", "item-bluesword", "item-goldensword", "item-leatherarmor", "item-mailarmor",
-                                "item-platearmor", "item-redarmor", "item-goldenarmor", "item-flask", "item-cake", "item-burger", "morningstar", "item-morningstar", "item-firepotion"];
+            this.spriteNames = ["clotharmor", "hand", "target", "talk", "shadow16", "wizard", "guard", "king", "villagegirl", "villager", "coder", "agent", "rick", "scientist", "nyan", "priest",
+                                "sorcerer", "octocat", "beachnpc", "forestnpc", "desertnpc", "lavanpc"];
         },
 
         setup: function($bubbleContainer, canvas, background, foreground, input) {
             this.setBubbleManager(new BubbleManager($bubbleContainer));
             this.setRenderer(new Renderer(this, canvas, background, foreground));
-            this.setChatInput(input);
+//             this.setChatInput(input);
         },
 
         setStorage: function(storage) {
@@ -128,7 +124,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             if(this.storage.hasAlreadyPlayed() && this.storage.data.player) {
                 if(this.storage.data.player.armor && this.storage.data.player.weapon) {
                     this.player.setSpriteName(this.storage.data.player.armor);
-                    this.player.setWeaponName(this.storage.data.player.weapon);
+//                     this.player.setWeaponName(this.storage.data.player.weapon);
                 }
                 if(this.storage.data.player.guild) {
 					this.player.setGuild(this.storage.data.player.guild);
@@ -149,7 +145,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         initCursors: function() {
             this.cursors["hand"] = this.sprites["hand"];
             this.cursors["sword"] = this.sprites["sword"];
-            this.cursors["loot"] = this.sprites["loot"];
+//             this.cursors["loot"] = this.sprites["loot"];
             this.cursors["target"] = this.sprites["target"];
             this.cursors["arrow"] = this.sprites["arrow"];
             this.cursors["talk"] = this.sprites["talk"];
@@ -355,7 +351,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     entity.sprite = null;
                     entity.setSprite(self.sprites[entity.getSpriteName()]);
                 });
-                this.initHurtSprites();
+//                this.initHurtSprites();
                 this.initShadows();
                 this.initCursors();
             }
@@ -667,17 +663,19 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
             var wait = setInterval(function() {
                 if(self.map.isLoaded && self.spritesLoaded()) {
+                    clearInterval(wait);
+                    
                     self.ready = true;
                     log.debug('All sprites loaded.');
 
-                    self.loadAudio();
+//                     self.loadAudio();
 
-                    self.initMusicAreas();
-                    self.initAchievements();
+//                    self.initMusicAreas();
+//                     self.initAchievements();
                     self.initCursors();
                     self.initAnimations();
                     self.initShadows();
-                    self.initHurtSprites();
+//                     self.initHurtSprites();
 
                     if(!self.renderer.mobile
                     && !self.renderer.tablet
@@ -686,7 +684,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     }
 
                     self.initEntityGrid();
-                    self.initItemGrid();
+//                     self.initItemGrid();
                     self.initPathingGrid();
                     self.initRenderingGrid();
 
@@ -697,7 +695,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
                     self.connect(action, started_callback);
 
-                    clearInterval(wait);
                 }
             }, 100);
         },
@@ -817,38 +814,38 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 // sanitize and shorten names exceeding the allowed length.
                 self.player.name = name;
                 self.player.setGridPosition(x, y);
-                self.player.setMaxHitPoints(hp);
-                self.player.setArmorName(armor);
+//                 self.player.setMaxHitPoints(hp);
+//                 self.player.setArmorName(armor);
                 self.player.setSpriteName(avatar);
-                self.player.setWeaponName(weapon);
+//                 self.player.setWeaponName(weapon);
                 self.initPlayer();
-                self.player.experience = experience;
-                self.player.level = Types.getLevel(experience);
+//                 self.player.experience = experience;
+//                 self.player.level = Types.getLevel(experience);
 
-                self.updateBars();
-                self.updateExpBar();
+//                 self.updateBars();
+//                 self.updateExpBar();
                 self.resetCamera();
                 self.updatePlateauMode();
-                self.audioManager.updateMusic();
+//                 self.audioManager.updateMusic();
 
                 self.addEntity(self.player);
                 self.player.dirtyRect = self.renderer.getEntityBoundingRect(self.player);
 
-                setTimeout(function() {
-                    self.tryUnlockingAchievement("STILL_ALIVE");
-                }, 1500);
+//                 setTimeout(function() {
+//                     self.tryUnlockingAchievement("STILL_ALIVE");
+//                 }, 1500);
 
-                if(!self.storage.hasAlreadyPlayed()) {
-                    self.storage.initPlayer(self.player.name);
-                    self.storage.savePlayer(self.renderer.getPlayerImage(),
-                                            self.player.getSpriteName(),
-                                            self.player.getWeaponName(),
-                                            self.player.getGuild());
-                    self.showNotification("Welcome to BrowserQuest!");
-                } else {
-                    self.showNotification("Welcome Back. You are level " + self.player.level + ".");
-                    self.storage.setPlayerName(name);
-                }
+//                 if(!self.storage.hasAlreadyPlayed()) {
+//                     self.storage.initPlayer(self.player.name);
+//                     self.storage.savePlayer(self.renderer.getPlayerImage(),
+//                                             self.player.getSpriteName(),
+//                                             self.player.getWeaponName(),
+//                                             self.player.getGuild());
+//                     self.showNotification("Welcome to BrowserQuest!");
+//                 } else {
+//                     self.showNotification("Welcome Back. You are level " + self.player.level + ".");
+//                     self.storage.setPlayerName(name);
+//                 }
 
 
                 self.player.onStartPathing(function(path) {
@@ -856,12 +853,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         x =  path[i][0],
                         y =  path[i][1];
 
-                    if(self.player.isMovingToLoot()) {
-                        self.player.isLootMoving = false;
-                    }
-                    else if(!self.player.isAttacking()) {
-                        self.client.sendMove(x, y);
-                    }
+//                     if(self.player.isMovingToLoot()) {
+//                         self.player.isLootMoving = false;
+//                     }
+//                     else if(!self.player.isAttacking()) {
+//                         self.client.sendMove(x, y);
+//                     }
 
                     // Target cursor position
                     self.selectedX = x;
@@ -877,21 +874,21 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     }
                 });
 
-                self.player.onCheckAggro(function() {
-                    self.forEachMob(function(mob) {
-                        if(mob.isAggressive && !mob.isAttacking() && self.player.isNear(mob, mob.aggroRange)) {
-                            self.player.aggro(mob);
-                        }
-                    });
-                });
+//                 self.player.onCheckAggro(function() {
+//                     self.forEachMob(function(mob) {
+//                         if(mob.isAggressive && !mob.isAttacking() && self.player.isNear(mob, mob.aggroRange)) {
+//                             self.player.aggro(mob);
+//                         }
+//                     });
+//                 });
 
-                self.player.onAggro(function(mob) {
-                    if(!mob.isWaitingToAttack(self.player) && !self.player.isAttackedBy(mob)) {
-                        self.player.log_info("Aggroed by " + mob.id + " at ("+self.player.gridX+", "+self.player.gridY+")");
-                        self.client.sendAggro(mob);
-                        mob.waitToAttack(self.player);
-                    }
-                });
+//                 self.player.onAggro(function(mob) {
+//                     if(!mob.isWaitingToAttack(self.player) && !self.player.isAttackedBy(mob)) {
+//                         self.player.log_info("Aggroed by " + mob.id + " at ("+self.player.gridX+", "+self.player.gridY+")");
+//                         self.client.sendAggro(mob);
+//                         mob.waitToAttack(self.player);
+//                     }
+//                 });
 
                 self.player.onBeforeStep(function() {
                     var blockingEntity = self.getEntityAt(self.player.nextGridX, self.player.nextGridY);
@@ -910,39 +907,39 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         self.enqueueZoningFrom(self.player.gridX, self.player.gridY);
                     }
 
-                    self.player.forEachAttacker(self.makeAttackerFollow);
+//                     self.player.forEachAttacker(self.makeAttackerFollow);
 
-                    var item = self.getItemAt(self.player.gridX, self.player.gridY);
-                    if(item instanceof Item) {
-                        self.tryLootingItem(item);
-                    }
+//                     var item = self.getItemAt(self.player.gridX, self.player.gridY);
+//                     if(item instanceof Item) {
+//                         self.tryLootingItem(item);
+//                     }
 
 
-                    if((self.player.gridX <= 85 && self.player.gridY <= 179 && self.player.gridY > 178) || (self.player.gridX <= 85 && self.player.gridY <= 266 && self.player.gridY > 265)) {
-                        self.tryUnlockingAchievement("INTO_THE_WILD");
-                    }
+//                     if((self.player.gridX <= 85 && self.player.gridY <= 179 && self.player.gridY > 178) || (self.player.gridX <= 85 && self.player.gridY <= 266 && self.player.gridY > 265)) {
+//                         self.tryUnlockingAchievement("INTO_THE_WILD");
+//                     }
 
-                    if(self.player.gridX <= 85 && self.player.gridY <= 293 && self.player.gridY > 292) {
-                        self.tryUnlockingAchievement("AT_WORLDS_END");
-                    }
+//                     if(self.player.gridX <= 85 && self.player.gridY <= 293 && self.player.gridY > 292) {
+//                         self.tryUnlockingAchievement("AT_WORLDS_END");
+//                     }
 
-                    if(self.player.gridX <= 85 && self.player.gridY <= 100 && self.player.gridY > 99) {
-                        self.tryUnlockingAchievement("NO_MANS_LAND");
-                    }
+//                     if(self.player.gridX <= 85 && self.player.gridY <= 100 && self.player.gridY > 99) {
+//                         self.tryUnlockingAchievement("NO_MANS_LAND");
+//                     }
 
-                    if(self.player.gridX <= 85 && self.player.gridY <= 51 && self.player.gridY > 50) {
-                        self.tryUnlockingAchievement("HOT_SPOT");
-                    }
+//                     if(self.player.gridX <= 85 && self.player.gridY <= 51 && self.player.gridY > 50) {
+//                         self.tryUnlockingAchievement("HOT_SPOT");
+//                     }
 
-                    if(self.player.gridX <= 27 && self.player.gridY <= 123 && self.player.gridY > 112) {
-                        self.tryUnlockingAchievement("TOMB_RAIDER");
-                    }
+//                     if(self.player.gridX <= 27 && self.player.gridY <= 123 && self.player.gridY > 112) {
+//                         self.tryUnlockingAchievement("TOMB_RAIDER");
+//                     }
 
                     self.updatePlayerCheckpoint();
 
-                    if(!self.player.isDead) {
-                        self.audioManager.updateMusic();
-                    }
+//                     if(!self.player.isDead) {
+//                         self.audioManager.updateMusic();
+//                     }
                 });
 
                 self.player.onStopPathing(function(x, y) {
@@ -988,7 +985,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
                         self.updatePlateauMode();
 
-                        self.checkUndergroundAchievement();
+//                         self.checkUndergroundAchievement();
 
                         if(self.renderer.mobile || self.renderer.tablet) {
                             // When rendering with dirty rects, clear the whole screen when entering a door.
@@ -1007,15 +1004,15 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     if(self.player.target instanceof Npc) {
                         self.makeNpcTalk(self.player.target);
                     } else if(self.player.target instanceof Chest) {
-                        self.client.sendOpen(self.player.target);
-                        self.audioManager.playSound("chest");
+//                         self.client.sendOpen(self.player.target);
+//                         self.audioManager.playSound("chest");
                     }
 
-                    self.player.forEachAttacker(function(attacker) {
-                        if(!attacker.isAdjacentNonDiagonal(self.player)) {
-                            attacker.follow(self.player);
-                        }
-                    });
+//                     self.player.forEachAttacker(function(attacker) {
+//                         if(!attacker.isAdjacentNonDiagonal(self.player)) {
+//                             attacker.follow(self.player);
+//                         }
+//                     });
 
                     self.unregisterEntityPosition(self.player);
                     self.registerEntityPosition(self.player);
@@ -1049,69 +1046,69 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         }, 1000);
                     });
 
-                    self.player.forEachAttacker(function(attacker) {
-                        attacker.disengage();
-                        attacker.idle();
-                    });
+//                     self.player.forEachAttacker(function(attacker) {
+//                         attacker.disengage();
+//                         attacker.idle();
+//                     });
 
-                    self.audioManager.fadeOutCurrentMusic();
-                    self.audioManager.playSound("death");
+//                     self.audioManager.fadeOutCurrentMusic();
+//                     self.audioManager.playSound("death");
                 });
 
                 self.player.onHasMoved(function(player) {
                     self.assignBubbleTo(player);
                 });
-                self.client.onPVPChange(function(pvpFlag){
-                    self.player.flagPVP(pvpFlag);
-                    if(pvpFlag){
-                        self.showNotification("PVP is on.");
-                    } else{
-                        self.showNotification("PVP is off.");
-                    }
-                });
+//                 self.client.onPVPChange(function(pvpFlag){
+//                     self.player.flagPVP(pvpFlag);
+//                     if(pvpFlag){
+//                         self.showNotification("PVP is on.");
+//                     } else{
+//                         self.showNotification("PVP is off.");
+//                     }
+//                 });
 
-                self.player.onArmorLoot(function(armorName) {
-                    self.player.switchArmor(self.sprites[armorName]);
-                });
+//                 self.player.onArmorLoot(function(armorName) {
+//                     self.player.switchArmor(self.sprites[armorName]);
+//                 });
 
-                self.player.onSwitchItem(function() {
-                    self.storage.savePlayer(self.renderer.getPlayerImage(),
-                                            self.player.getArmorName(),
-                                            self.player.getWeaponName(),
-                                            self.player.getGuild());
-                    if(self.equipment_callback) {
-                        self.equipment_callback();
-                    }
-                });
+//                 self.player.onSwitchItem(function() {
+//                     self.storage.savePlayer(self.renderer.getPlayerImage(),
+//                                             self.player.getArmorName(),
+//                                             self.player.getWeaponName(),
+//                                             self.player.getGuild());
+//                     if(self.equipment_callback) {
+//                         self.equipment_callback();
+//                     }
+//                 });
 
-                self.player.onInvincible(function() {
-                    self.invincible_callback();
-                    self.player.switchArmor(self.sprites["firefox"]);
-                });
+//                 self.player.onInvincible(function() {
+//                     self.invincible_callback();
+//                     self.player.switchArmor(self.sprites["firefox"]);
+//                 });
 
-                self.client.onSpawnItem(function(item, x, y) {
-                    log.info("Spawned " + Types.getKindAsString(item.kind) + " (" + item.id + ") at "+x+", "+y);
-                    self.addItem(item, x, y);
-                });
+//                 self.client.onSpawnItem(function(item, x, y) {
+//                     log.info("Spawned " + Types.getKindAsString(item.kind) + " (" + item.id + ") at "+x+", "+y);
+//                     self.addItem(item, x, y);
+//                 });
 
-                self.client.onSpawnChest(function(chest, x, y) {
-                    log.info("Spawned chest (" + chest.id + ") at "+x+", "+y);
-                    chest.setSprite(self.sprites[chest.getSpriteName()]);
-                    chest.setGridPosition(x, y);
-                    chest.setAnimation("idle_down", 150);
-                    self.addEntity(chest, x, y);
+//                 self.client.onSpawnChest(function(chest, x, y) {
+//                     log.info("Spawned chest (" + chest.id + ") at "+x+", "+y);
+//                     chest.setSprite(self.sprites[chest.getSpriteName()]);
+//                     chest.setGridPosition(x, y);
+//                     chest.setAnimation("idle_down", 150);
+//                     self.addEntity(chest, x, y);
 
-                    chest.onOpen(function() {
-                        chest.stopBlinking();
-                        chest.setSprite(self.sprites["death"]);
-                        chest.setAnimation("death", 120, 1, function() {
-                            log.info(chest.id + " was removed");
-                            self.removeEntity(chest);
-                            self.removeFromRenderingGrid(chest, chest.gridX, chest.gridY);
-                            self.previousClickPosition = {};
-                        });
-                    });
-                });
+//                     chest.onOpen(function() {
+//                         chest.stopBlinking();
+//                         chest.setSprite(self.sprites["death"]);
+//                         chest.setAnimation("death", 120, 1, function() {
+//                             log.info(chest.id + " was removed");
+//                             self.removeEntity(chest);
+//                             self.removeFromRenderingGrid(chest, chest.gridX, chest.gridY);
+//                             self.previousClickPosition = {};
+//                         });
+//                     });
+//                 });
 
                 self.client.onSpawnCharacter(function(entity, x, y, orientation, targetId) {
                     if(!self.entityIdExists(entity.id)) {

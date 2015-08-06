@@ -641,15 +641,15 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.email = email;
         },
  
-        loadAudio: function() {
-            this.audioManager = new AudioManager(this);
-        },
+        // loadAudio: function() {
+        //     this.audioManager = new AudioManager(this);
+        // },
 
         initMusicAreas: function() {
             var self = this;
-            _.each(this.map.musicAreas, function(area) {
-                self.audioManager.addArea(area.x, area.y, area.w, area.h, area.id);
-            });
+            // _.each(this.map.musicAreas, function(area) {
+            //     self.audioManager.addArea(area.x, area.y, area.w, area.h, area.id);
+            // });
         },
 
         run: function(action, started_callback) {
@@ -992,13 +992,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                             self.renderer.clearScreen(self.renderer.context);
                         }
 
-                        if(dest.portal) {
-                            self.audioManager.playSound("teleport");
-                        }
+                        // if(dest.portal) {
+                        //     self.audioManager.playSound("teleport");
+                        // }
 
-                        if(!self.player.isDead) {
-                            self.audioManager.updateMusic();
-                        }
+                        // if(!self.player.isDead) {
+                        //     self.audioManager.updateMusic();
+                        // }
                     }
 
                     if(self.player.target instanceof Npc) {
@@ -1228,9 +1228,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                         self.removeFromEntityGrid(entity, entity.gridX, entity.gridY);
                                         self.removeFromPathingGrid(entity.gridX, entity.gridY);
 
-                                        if(self.camera.isVisible(entity)) {
-                                            self.audioManager.playSound("kill"+Math.floor(Math.random()*2+1));
-                                        }
+                                        // if(self.camera.isVisible(entity)) {
+                                        //     self.audioManager.playSound("kill"+Math.floor(Math.random()*2+1));
+                                        // }
 
                                         self.updateCursor();
                                     });
@@ -1517,7 +1517,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         if(isHurt) {
                             player.hurt();
                             self.infoManager.addDamageInfo(diff, player.x, player.y - 15, "received");
-                            self.audioManager.playSound("hurt");
+                            // self.audioManager.playSound("hurt");
                             self.storage.addDamage(-diff);
                             self.tryUnlockingAchievement("MEATSHIELD");
                             if(self.playerhurt_callback) {
@@ -1584,7 +1584,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     var entity = self.getEntityById(entityId);
                     self.createBubble(entityId, message);
                     self.assignBubbleTo(entity);
-                    self.audioManager.playSound("chat");
+                    // self.audioManager.playSound("chat");
                 });
 
                 self.client.onPopulationChange(function(worldPlayers, totalPlayers) {
@@ -1783,10 +1783,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 if(msg) {
                     this.createBubble(npc.id, msg);
                     this.assignBubbleTo(npc);
-                    this.audioManager.playSound("npc");
+                    // this.audioManager.playSound("npc");
                 } else {
                     this.destroyBubble(npc.id);
-                    this.audioManager.playSound("npc-end");
+                    // this.audioManager.playSound("npc-end");
                 }
                 this.tryUnlockingAchievement("SMALL_TALK");
 
@@ -2279,9 +2279,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                             this.client.sendHit(character.target);
                         }
 
-                        if(character instanceof Player && this.camera.isVisible(character)) {
-                            this.audioManager.playSound("hit"+Math.floor(Math.random()*2+1));
-                        }
+                        // if(character instanceof Player && this.camera.isVisible(character)) {
+                        //     this.audioManager.playSound("hit"+Math.floor(Math.random()*2+1));
+                        // }
 
                         if(character.hasTarget() && character.target.id === this.playerId && this.player && !this.player.invincible) {
                             this.client.sendHurt(character);
@@ -2643,7 +2643,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 if(achievement.isCompleted() && this.storage.unlockAchievement(achievement.id)) {
                     if(this.unlock_callback) {
                         this.unlock_callback(achievement.id, achievement.name, achievement.desc);
-                        this.audioManager.playSound("achievement");
+                        // this.audioManager.playSound("achievement");
                     }
                 }
             }

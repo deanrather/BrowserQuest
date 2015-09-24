@@ -189,6 +189,10 @@ define(['/browserquest/js/player.js', '/browserquest/js/entityfactory.js', 'bowe
                 weaponAvatar = data[9],
                 experience = data[10];
 
+			if(x>30) x = 30;
+			if(y>30) y = 30;
+			
+			
             if(this.welcome_callback) {
                 this.welcome_callback(id, name, x, y, hp, armor, weapon, avatar, weaponAvatar, experience);
             }

@@ -618,6 +618,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             var x = entity.gridX,
                 y = entity.gridY;
 
+			if(x >= this.entityGrid.length) x = 2;
+			if(y >= this.entityGrid[0].length) y = 2;
+			
+			
             if(entity) {
                 if(entity instanceof Character || entity instanceof Chest) {
                     this.entityGrid[y][x][entity.id] = entity;
@@ -1845,6 +1849,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             var m = this.map;
 
             this.camera.forEachVisiblePosition(function(x, y) {
+			
                 if(!m.isOutOfBounds(x, y)) {
                     callback(m.GridPositionToTileIndex(x, y) - 1);
                 }
